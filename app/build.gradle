@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    // Add the Google services Gradle plugin
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -36,4 +38,21 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:33.12.0')
+
+    // PDF viewer library
+    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    // Google services plugin
+    apply plugin: 'com.google.gms.google-services'
+
+    // Room Db
+    implementation "androidx.room:room-runtime:2.6.1"
+    annotationProcessor "androidx.room:room-compiler:2.6.1" // For Java
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+
+
 }

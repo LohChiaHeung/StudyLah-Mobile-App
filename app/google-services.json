@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "637210601117",
+    "firebase_url": "https://studylah-cee43-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "studylah-cee43",
+    "storage_bucket": "studylah-cee43.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637210601117:android:23e6213c95d8627bf5d674",
+        "android_client_info": {
+          "package_name": "my.edu.utar.studylah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU_C3qMoMuU7KR1IHmUA3wR3vjV3wPgx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
