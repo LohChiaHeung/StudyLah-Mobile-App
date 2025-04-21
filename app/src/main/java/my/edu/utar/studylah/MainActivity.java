@@ -1,10 +1,11 @@
 package my.edu.utar.studylah;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 //Testing
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
         btnShelf.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ShelfActivity.class);
             startActivity(intent);
+        });
+
+        Button btnPomodoro = findViewById(R.id.btnPomodoro);
+        btnPomodoro.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, PomodoroActivity.class);
+            startActivity(intent);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_color));
         });
 
     }

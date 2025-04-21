@@ -19,6 +19,10 @@
         <activity android:name=".ViewPdfActivity" />
         <activity android:name=".PdfViewerActivity" />
 
+        <!-- Pomodoro Timer Activity -->
+        <activity android:name=".PomodoroActivity"
+            android:configChanges="orientation|screenSize"/>
+
 
         <activity
             android:name=".MainActivity"
