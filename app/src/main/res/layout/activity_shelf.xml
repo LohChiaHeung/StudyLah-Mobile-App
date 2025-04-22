@@ -13,6 +13,13 @@
         android:visibility="visible"
         android:layout_marginBottom="8dp" />
 
+    <Button
+        android:id="@+id/btnViewTasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Tasks"
+        android:layout_marginTop="8dp" />
+
 
     <TextView
         android:id="@+id/textPath"
@@ -40,6 +47,12 @@
             android:layout_height="wrap_content"
             android:text="Import PDF"
             android:layout_marginStart="16dp" />
+
+        <Button
+            android:id="@+id/btnGenerateTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate To-Do Tasks"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

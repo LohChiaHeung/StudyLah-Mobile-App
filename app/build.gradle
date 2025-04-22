@@ -44,15 +44,12 @@ dependencies {
     // PDF viewer library
     implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
 
-    // Google services plugin
-    apply plugin: 'com.google.gms.google-services'
-
     // Room Db
     implementation "androidx.room:room-runtime:2.6.1"
     annotationProcessor "androidx.room:room-compiler:2.6.1" // For Java
 
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-
-
-
 }
+
+// Google services plugin
+apply plugin: 'com.google.gms.google-services'

@@ -5,12 +5,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {FolderEntity.class, PdfEntity.class}, version = 1)
+@Database(entities = {FolderEntity.class, PdfEntity.class, TaskEntity.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
 
     public abstract FolderDao folderDao();
     public abstract PdfDao pdfDao();
+    public abstract TaskDao taskDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
