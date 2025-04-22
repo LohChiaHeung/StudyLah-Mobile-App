@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Total Tasks"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/lexend_regular"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/inputTotalTasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="e.g. 5"
+        android:layout_marginTop="12dp"
+        android:padding="8dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/lexend_regular"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="#7DA0FF"
+            android:layout_marginEnd="24dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/lexend_regular" />
+
+        <TextView
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textColor="#7DA0FF"
+            android:textSize="18sp"
+            android:fontFamily="@font/lexend_regular"/>
+    </LinearLayout>
+</LinearLayout>
