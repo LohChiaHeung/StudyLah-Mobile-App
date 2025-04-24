@@ -23,11 +23,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnPomodoro = findViewById(R.id.btnPomodoro);
         btnPomodoro.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, PomodoroActivity.class);
-            startActivity(intent);
+            Intent intent2 = new Intent(MainActivity.this, PomodoroActivity.class);
+            startActivity(intent2);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_color));
         });
 
+        Button btnchatbot = findViewById(R.id.btnChatbot);
+        btnchatbot.setOnClickListener(v -> {
+            Intent intent3 = new Intent(MainActivity.this, AiChatbotPage.class);
+            startActivity(intent3);
+        });
+
     }
-    // test push 1
+
 }

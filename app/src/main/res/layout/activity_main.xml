@@ -6,20 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnOpenShelf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open Shelf" />
+        android:text="Open Shelf"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp" />
 
     <Button
         android:id="@+id/btnPomodoro"
@@ -33,4 +28,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.696" />
 
+    <Button
+    android:id="@+id/btnChatbot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Chatbot"
+    app:layout_constraintTop_toBottomOf="@+id/btnOpenShelf"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginTop="24dp"
+    android:layout_marginStart="16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

@@ -28,6 +28,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -35,6 +38,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.6.0'
+    implementation 'androidx.navigation:navigation-ui:2.6.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
@@ -42,14 +47,17 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.12.0')
 
     // PDF viewer library
-    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    // Google services plugin
+    apply plugin: 'com.google.gms.google-services'
+
+    // internet connection
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
     // Room Db
-    implementation "androidx.room:room-runtime:2.6.1"
-    annotationProcessor "androidx.room:room-compiler:2.6.1" // For Java
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
-    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
 }
-
-// Google services plugin
-apply plugin: 'com.google.gms.google-services'
