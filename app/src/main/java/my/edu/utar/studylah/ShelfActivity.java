@@ -1,5 +1,6 @@
 package my.edu.utar.studylah;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +17,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import androidx.appcompat.widget.SearchView;
+
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,28 +46,38 @@ public class ShelfActivity extends AppCompatActivity {
     private TextView textPath;
     private Integer currentFolderId = null;
     private final List<Integer> folderHistory = new ArrayList<>();
-
-
+    private androidx.appcompat.widget.SearchView searchView;
+    private List<PdfEntity> allPdfs = new ArrayList<>(); // To store all PDFs from current and subfolders
+    private List<FolderEntity> currentFolders = new ArrayList<>();
+    private RecyclerView searchResultRecyclerView;
+    private SearchResultAdapter searchResultAdapter;
+    private static final String TAG = "ShelfActivity"; // For logging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelf);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        // Set up back press handling
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 handleBackNavigation();
             }
         });
+
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "study_db").allowMainThreadQueries().build();
-
+                        AppDatabase.class, "study_db")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
 
         recyclerView = findViewById(R.id.recyclerView);
         textPath = findViewById(R.id.textPath);
@@ -75,32 +92,75 @@ public class ShelfActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(folderAdapter);
 
-        loadContents();
+        findViewById(R.id.btnImportPdf).setOnClickListener(v -> {
+            showBottomSheetOptions();
+        });
 
-        findViewById(R.id.btnCreateFolder).setOnClickListener(v -> createFolder());
-        findViewById(R.id.btnImportPdf).setOnClickListener(v -> importPdf());
+
         findViewById(R.id.btnGenerateTasks).setOnClickListener(v -> showTaskGenerationDialog());
-
         findViewById(R.id.btnViewTasks).setOnClickListener(v -> {
             Intent intent = new Intent(ShelfActivity.this, TaskListActivity.class);
             intent.putExtra("folder_id", -1); // Pass -1 to load all tasks
             startActivity(intent);
         });
+
+        searchResultRecyclerView = findViewById(R.id.searchResultRecyclerView);
+        searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        searchResultAdapter = new SearchResultAdapter(new ArrayList<>(), this::onPdfClick);
+        searchResultRecyclerView.setAdapter(searchResultAdapter);
+        searchView = findViewById(R.id.searchView);
+
+        loadContents();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterPdf(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterPdf(newText);
+                return true;
+            }
+        });
+
     }
 
-    // In ShelfActivity.java, update the onFolderClick method
+    // Fixed onFolderClick method to prevent duplicate history entries
     private void onFolderClick(FolderEntity folder) {
-        folderHistory.add(currentFolderId);  // ✅ store null if you're in root
-        currentFolderId = folder.id;
+        Log.d(TAG, "onFolderClick: Before - currentFolderId=" + currentFolderId + ", history=" + folderHistory);
 
-        textPath.setText("Folder: " + folder.folderName);
+        // Only add to history if current folder is not null and not already the last item in history
+        if (currentFolderId != null &&
+                (folderHistory.isEmpty() || !currentFolderId.equals(folderHistory.get(folderHistory.size() - 1)))) {
+            folderHistory.add(currentFolderId);
+        }
+
+        currentFolderId = folder.id;
+        updatePathText();
         loadContents();
+
+        Log.d(TAG, "onFolderClick: After - currentFolderId=" + currentFolderId + ", history=" + folderHistory);
     }
 
     private void loadContents() {
-        List<FolderEntity> folders = db.folderDao().getChildFolders(currentFolderId);
-        List<PdfEntity> pdfs = db.pdfDao().getChildPdfs(currentFolderId);
-        folderAdapter.updateData(folders, pdfs);
+        Log.d(TAG, "loadContents: Loading for folderId=" + currentFolderId + ", history=" + folderHistory);
+        currentFolders = db.folderDao().getChildFolders(currentFolderId);
+        List<PdfEntity> directPdfs = db.pdfDao().getChildPdfs(currentFolderId);
+
+        allPdfs = getAllPdfsRecursive(currentFolderId);
+        folderAdapter.updateData(currentFolders, directPdfs);
+    }
+
+    private List<PdfEntity> getAllPdfsRecursive(Integer parentId) {
+        List<PdfEntity> result = new ArrayList<>(db.pdfDao().getChildPdfs(parentId));
+        List<FolderEntity> subFolders = db.folderDao().getChildFolders(parentId);
+        for (FolderEntity folder : subFolders) {
+            result.addAll(getAllPdfsRecursive(folder.id));
+        }
+        return result;
     }
 
     private void createFolder() {
@@ -111,10 +171,12 @@ public class ShelfActivity extends AppCompatActivity {
         builder.setView(input);
 
         builder.setPositiveButton("Create", (dialog, which) -> {
-            String name = input.getText().toString();
+            String name = input.getText().toString().trim();
             if (!name.isEmpty()) {
                 db.folderDao().insertFolder(new FolderEntity(name, currentFolderId));
                 loadContents();
+            } else {
+                Toast.makeText(this, "Folder name cannot be empty", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -129,19 +191,31 @@ public class ShelfActivity extends AppCompatActivity {
         startActivityForResult(intent, 200);
     }
 
-
+    @SuppressLint("WrongConstant")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101 && resultCode == RESULT_OK && data != null) {
+            ArrayList<Integer> returnedHistory = data.getIntegerArrayListExtra("folder_history");
             int folderId = data.getIntExtra("current_folder_id", -1);
-            if (folderId != -1) {
-                currentFolderId = folderId;
-                textPath.setText(currentFolderId == null ? "Root Folder" : "Folder: " + getFolderName(folderId));
-                loadContents();
+
+            Log.d(TAG, "onActivityResult: Returned from PDF: folderId=" + folderId + ", history=" + returnedHistory);
+
+            if (returnedHistory != null) {
+                // Clean up the history to avoid duplicates
+                folderHistory.clear();
+                for (Integer id : returnedHistory) {
+                    // Avoid consecutive duplicates in history
+                    if (folderHistory.isEmpty() || !id.equals(folderHistory.get(folderHistory.size() - 1))) {
+                        folderHistory.add(id);
+                    }
+                }
             }
-            return;
+
+            currentFolderId = (folderId != -1) ? folderId : null;
+            updatePathText();
+            loadContents();
         }
 
         if (requestCode == 200 && resultCode == RESULT_OK && data != null) {
@@ -156,9 +230,29 @@ public class ShelfActivity extends AppCompatActivity {
             db.pdfDao().insertPdf(pdf);
             loadContents();
         }
-
-
     }
+
+    private void filterPdf(String query) {
+        if (query.trim().isEmpty()) {
+            searchResultRecyclerView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE); // ✅ show main content
+            return;
+        }
+
+        // Filter PDF names only (not folders)
+        List<PdfEntity> filtered = new ArrayList<>();
+        for (PdfEntity pdf : allPdfs) {
+            if (pdf.getName().toLowerCase().contains(query.toLowerCase())) {
+                filtered.add(pdf);
+            }
+        }
+
+        // Show only results in list view
+        searchResultAdapter.updateResults(filtered);
+        searchResultRecyclerView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE); // ✅ hide main folders/pdfs
+    }
+
 
     private String getFileName(Uri uri) {
         String result = null;
@@ -170,22 +264,25 @@ public class ShelfActivity extends AppCompatActivity {
                     result = cursor.getString(nameIndex);
                 }
             } finally {
-                cursor.close();
+                if (cursor != null) {
+                    cursor.close();
+                }
             }
         }
         return result != null ? result : uri.getLastPathSegment();
     }
 
-    // view
+    // Fixed onPdfClick to simplify history handling
     private void onPdfClick(PdfEntity pdf) {
-        // ✅ Add this debug log FIRST
-        Log.d("ShelfActivity", "Opening PDF URI: " + pdf.getUri());
+        Log.d(TAG, "onPdfClick: Opening PDF, current history=" + folderHistory);
 
+        // Simply launch the PDF viewer with current state
         Intent intent = new Intent(this, PdfViewerActivity.class);
         intent.putExtra("pdf_uri", pdf.getUri());
-        intent.putExtra("current_folder_id", currentFolderId);
-        startActivityForResult(intent, 101); // ✅ receive result
-
+        intent.putExtra("pdf_name", pdf.getName());
+        intent.putExtra("current_folder_id", pdf.getParentFolderId());
+        intent.putIntegerArrayListExtra("folder_history", new ArrayList<>(folderHistory));
+        startActivityForResult(intent, 101);
     }
 
     public void deleteFolder(FolderEntity folder) {
@@ -204,48 +301,83 @@ public class ShelfActivity extends AppCompatActivity {
         return handleBackNavigation();
     }
 
+    // Improved back navigation handling
     private boolean handleBackNavigation() {
-        Log.d("ShelfActivity", "Handling back navigation. History size: " + folderHistory.size());
+        Log.d(TAG, "handleBackNavigation: History before=" + folderHistory + ", currentFolderId=" + currentFolderId);
 
         if (!folderHistory.isEmpty()) {
-            // Go back one folder level
-            currentFolderId = folderHistory.remove(folderHistory.size() - 1);
-
-            String folderName = (currentFolderId == null)
-                    ? "Shelf"
-                    : getFolderName(currentFolderId);
-
-            Log.d("ShelfActivity", "Navigating back to folder: " + folderName + " (ID: " + currentFolderId + ")");
-            if (folderName == "Shelf"){
-                textPath.setText(folderName);
-            }else{
-                textPath.setText("Folder: " + folderName);
+            // Remove any potential duplicates of current folder from the end of history
+            while (!folderHistory.isEmpty() &&
+                    currentFolderId != null &&
+                    currentFolderId.equals(folderHistory.get(folderHistory.size() - 1))) {
+                folderHistory.remove(folderHistory.size() - 1);
+                Log.d(TAG, "handleBackNavigation: Removed duplicate from history");
             }
+
+            if (!folderHistory.isEmpty()) {
+                // Go back one folder level
+                currentFolderId = folderHistory.remove(folderHistory.size() - 1);
+
+                Log.d(TAG, "handleBackNavigation: New currentFolderId=" + currentFolderId +
+                        ", Updated history=" + folderHistory);
+
+                updatePathText();
+                loadContents();
+                return true;
+            }
+        }
+
+        // If we're already at the root level (currentFolderId is null), finish the activity
+        // Otherwise, go back to the root level first
+        if (currentFolderId != null) {
+            // Go back to root level
+            currentFolderId = null;
+            folderHistory.clear();
+            updatePathText();
             loadContents();
             return true;
-        } else {
-            Log.d("ShelfActivity", "No more folder history, returning to MainActivity");
-            finish();
-            return false;
         }
-    }
 
+        // Only finish the activity if we're already at the root level
+        Log.d(TAG, "handleBackNavigation: No more history and at root level, finishing activity");
+        finish();
+        return true;
+    }
 
     private String getFolderName(int folderId) {
         try {
             FolderEntity folder = db.folderDao().getFolderById(folderId);
             return folder != null ? folder.folderName : "Unknown Folder";
         } catch (Exception e) {
-            Log.e("ShelfActivity", "Error getting folder name: " + e.getMessage());
+            Log.e(TAG, "Error getting folder name: " + e.getMessage());
             return "Unknown Folder";
         }
+    }
+
+    private void updatePathText() {
+        List<String> pathParts = new ArrayList<>();
+        if (currentFolderId == null) {
+            pathParts.add("Shelf");
+        } else {
+            pathParts.add("Shelf");
+            Integer tempId = currentFolderId;
+            while (tempId != null) {
+                FolderEntity folder = db.folderDao().getFolderById(tempId);
+                if (folder != null) {
+                    pathParts.add(1, folder.folderName); // Insert after Shelf
+                    tempId = folder.parentFolderId;
+                } else {
+                    break;
+                }
+            }
+        }
+        textPath.setText(String.join(" > ", pathParts));
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("current_folder_id", currentFolderId != null ? currentFolderId : -1);
-        // Save the folder history as an ArrayList of Integers
         outState.putIntegerArrayList("folder_history", new ArrayList<>(folderHistory));
     }
 
@@ -254,11 +386,7 @@ public class ShelfActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
             int folderId = savedInstanceState.getInt("current_folder_id", -1);
-            if (folderId != -1) {
-                currentFolderId = folderId;
-            } else {
-                currentFolderId = null;
-            }
+            currentFolderId = (folderId != -1) ? folderId : null;
 
             ArrayList<Integer> history = savedInstanceState.getIntegerArrayList("folder_history");
             if (history != null) {
@@ -266,15 +394,42 @@ public class ShelfActivity extends AppCompatActivity {
                 folderHistory.addAll(history);
             }
 
-            // Update the UI based on restored state
-            if (currentFolderId != null) {
-                textPath.setText("Folder: " + getFolderName(currentFolderId));
-            } else {
-                textPath.setText("Root Folder");
-            }
+            updatePathText();
             loadContents();
         }
     }
+
+    private void showBottomSheetOptions() {
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_options, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(view);
+
+        TextView createFolder = view.findViewById(R.id.option_create_folder);
+        TextView importPdf = view.findViewById(R.id.option_import_pdf);
+
+        createFolder.setOnClickListener(v -> {
+            dialog.dismiss();
+            createFolder();
+        });
+
+        importPdf.setOnClickListener(v -> {
+            dialog.dismiss();
+            importPdf();
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (searchView.getQuery().toString().trim().isEmpty()) {
+            searchResultRecyclerView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
+
 
     private void showTaskGenerationDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.generate_task_dialog, null);
@@ -361,8 +516,13 @@ public class ShelfActivity extends AppCompatActivity {
                 .setTitle("Set Duration")
                 .setView(input)
                 .setPositiveButton("Generate Tasks", (dialog, which) -> {
-                    int days = Integer.parseInt(input.getText().toString());
-                    generateTasks(selectedPdfs, days);
+                    String inputText = input.getText().toString();
+                    if (!inputText.isEmpty()) {
+                        int days = Integer.parseInt(inputText);
+                        generateTasks(selectedPdfs, days);
+                    } else {
+                        Toast.makeText(this, "Please enter a valid number of days", Toast.LENGTH_SHORT).show();
+                    }
                 })
                 .setNegativeButton("Cancel", null)
                 .show();

@@ -21,6 +21,10 @@ public interface FolderDao {
     @Query("SELECT * FROM folders WHERE id = :folderId LIMIT 1")
     FolderEntity getFolderById(int folderId);
 
+    @Query("SELECT * FROM pdfs WHERE pdf_name LIKE '%' || :query || '%'")
+    List<PdfEntity> searchPdfs(String query);
+
+
     @Query("DELETE FROM folders WHERE id = :folderId")
     void deleteFolderById(int folderId);
 

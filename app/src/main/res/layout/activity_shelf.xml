@@ -1,64 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Back Button -->
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="← Back"
         android:visibility="visible"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp" />
 
-    <Button
-        android:id="@+id/btnViewTasks"
-        android:layout_width="wrap_content"
+    <!-- Search View -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="View Tasks"
-        android:layout_marginTop="8dp" />
+        android:queryHint="Find your notes"
+        android:iconifiedByDefault="false"
+        android:background="@android:drawable/editbox_background"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="12dp" />
 
-
+    <!-- Path Display -->
     <TextView
         android:id="@+id/textPath"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Shelf"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <!-- Search Result List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultRecyclerView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:visibility="gone"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textPath"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-            android:id="@+id/btnCreateFolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create Folder" />
-
-        <Button
-            android:id="@+id/btnImportPdf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Import PDF"
-            android:layout_marginStart="16dp" />
-
-        <Button
-            android:id="@+id/btnGenerateTasks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Generate To-Do Tasks"/>
-    </LinearLayout>
-
+    <!-- Folder & PDF Grid List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textPath"
+        app:layout_constraintBottom_toTopOf="@+id/btnGenerateTasks"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Container to align the two buttons horizontally -->
+    <LinearLayout
+        android:id="@+id/taskButtonContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnImportPdf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Generate Task Button -->
+
+        <!-- View Task Button -->
+    </LinearLayout>
+
+    <!-- Floating Add Button (PDF Import) -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnImportPdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Upload Pdf"
+        android:src="@android:drawable/ic_menu_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnViewTasks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:layout_marginTop="12dp"/>
-</LinearLayout>
+        android:text="Tasks"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnGenerateTasks" />
+
+    <Button
+        android:id="@+id/btnGenerateTasks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:text="Add New Task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
