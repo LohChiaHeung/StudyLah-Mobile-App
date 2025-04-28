@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/imageStatus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_correct"
+        android:contentDescription="Status Emoji"
+        android:layout_marginEnd="12dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textTaskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Name"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/textCompletedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed Date"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+</LinearLayout>

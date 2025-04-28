@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/editTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Task Name" />
+
+    <TextView
+        android:id="@+id/textDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Due Date"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"/>
+
+    <Button
+        android:id="@+id/btnPickDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Date"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnSaveTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

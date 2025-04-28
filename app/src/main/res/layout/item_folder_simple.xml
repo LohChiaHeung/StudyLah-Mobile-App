@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <!-- Dropdown Arrow -->
+    <ImageView
+        android:id="@+id/dropdownArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_down" />
+
+    <!-- Folder Icon -->
+    <ImageView
+        android:id="@+id/folderIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/folder" />
+
+    <!-- Folder Name -->
+    <TextView
+        android:id="@+id/folderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Folder"
+        android:textSize="16sp"/>
+</LinearLayout>
