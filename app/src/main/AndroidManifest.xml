@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -39,6 +40,9 @@
             android:name=".PomodoroActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".PdfViewerActivity" />
+        <activity android:name=".MCQGeneratorActivity" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".QuizHistoryActivity" />
         <activity
             android:name=".LoadingActivity"
             android:exported="true">

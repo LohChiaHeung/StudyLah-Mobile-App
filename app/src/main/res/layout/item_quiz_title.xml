@@ -1,0 +1,73 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rect_test"
+    android:layout_marginBottom="12dp"
+    android:layout_marginTop="12dp"
+    android:padding="15dp">
+
+    <!-- Top Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Number -->
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1."
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="6dp"
+            android:textColor="#000"
+            android:fontFamily="@font/lexend_light" />
+
+        <!-- Icon -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📝"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvQuizTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/lexend_regular"
+            android:text="Lecture X - OOSAD"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <!-- Delete Button -->
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/delete_quiz_button"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:tint="@android:color/holo_red_dark"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Delete" />
+    </LinearLayout>
+
+    <!-- Timestamp -->
+    <TextView
+        android:id="@+id/tvQuizDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="🕒 2025-05-01 05:20"
+        android:textSize="12sp"
+        android:textColor="#666"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lexend_light"/>
+</LinearLayout>
