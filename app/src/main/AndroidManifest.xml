@@ -17,23 +17,31 @@
         android:theme="@style/Theme.StudyLah"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaskAdapterCompleted"
+            android:exported="false" />
+        <activity
+            android:name=".TaskAdapterUpcoming"
+            android:exported="false" />
+        <activity
+            android:name=".AllTasksActivity"
+            android:exported="false" />
+        <activity
             android:name=".AiChatbotPage"
             android:exported="false" />
-
         <activity android:name=".ShelfActivity" />
-
-        <activity android:name=".TaskListActivity" android:exported="false" />
-
-        <!-- Pomodoro Timer Activity -->
-        <activity android:name=".PomodoroActivity"
-            android:configChanges="orientation|screenSize"/>
-
-        <activity android:name=".PdfViewerActivity" />
-
         <activity
-            android:name=".MainActivity"
+            android:name=".TaskListActivity"
+            android:exported="false" /> <!-- Pomodoro Timer Activity -->
+        <activity
+            android:name=".PomodoroActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".PdfViewerActivity" />
+        <activity
+            android:name=".LoadingActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

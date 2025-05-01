@@ -52,7 +52,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.isCompleted = isChecked;
-            taskDao.markTaskComplete(task.taskId);
+            taskDao.updateTask(task); // ✅ Update task in database
+
+            if (context instanceof TaskListActivity) {
+                ((TaskListActivity) context).reloadTasksAfterCheckboxChange(); // ✅ Reload UI immediately
+            }
         });
     }
 
@@ -73,5 +77,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void addTask(int position, TaskEntity task) {
         taskList.add(position, task);
         notifyItemInserted(position);
+    }
+
+    public void setTaskList(List<TaskEntity> newTaskList) {
+        this.taskList = newTaskList;
+        notifyDataSetChanged();
     }
 }

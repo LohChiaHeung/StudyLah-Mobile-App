@@ -5,9 +5,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {FolderEntity.class, PdfEntity.class, TaskEntity.class}, version = 2)
+@Database(entities = {FolderEntity.class, PdfEntity.class, TaskEntity.class}, version = 5) // ✅ UPDATED HERE
 public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase INSTANCE;
+
+    private static volatile AppDatabase INSTANCE;
 
     public abstract FolderDao folderDao();
     public abstract PdfDao pdfDao();
@@ -15,14 +16,16 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "study_db")
-                    .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
-                    .build();
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                    AppDatabase.class, "study_db")
+                            .fallbackToDestructiveMigration() // ✅ important if you don't use full migration yet
+                            .allowMainThreadQueries()
+                            .build();
+                }
+            }
         }
         return INSTANCE;
     }
 }
-
-

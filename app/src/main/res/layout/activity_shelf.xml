@@ -96,24 +96,14 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/btnViewTasks"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:text="Tasks"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnGenerateTasks" />
-
-    <Button
         android:id="@+id/btnGenerateTasks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="92dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:text="Add New Task"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toStartOf="@+id/btnImportPdf" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

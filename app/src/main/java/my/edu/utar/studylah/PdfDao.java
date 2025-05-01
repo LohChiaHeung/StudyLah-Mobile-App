@@ -20,6 +20,8 @@ public interface PdfDao {
     @Query("DELETE FROM pdfs WHERE pdf_id = :pdfId")
     void deletePdfById(int pdfId);
 
+    @Query("SELECT * FROM pdfs WHERE parent_folder_id IS NULL")
+    List<PdfEntity> getRootPdfs();
 }
 
 

@@ -36,8 +36,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ShelfActivity extends AppCompatActivity {
     private AppDatabase db;
@@ -98,11 +100,6 @@ public class ShelfActivity extends AppCompatActivity {
 
 
         findViewById(R.id.btnGenerateTasks).setOnClickListener(v -> showTaskGenerationDialog());
-        findViewById(R.id.btnViewTasks).setOnClickListener(v -> {
-            Intent intent = new Intent(ShelfActivity.this, TaskListActivity.class);
-            intent.putExtra("folder_id", -1); // Pass -1 to load all tasks
-            startActivity(intent);
-        });
 
         searchResultRecyclerView = findViewById(R.id.searchResultRecyclerView);
         searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -429,78 +426,42 @@ public class ShelfActivity extends AppCompatActivity {
         }
     }
 
+    public List<FolderEntity> getChildFoldersFromDb(int folderId) {
+        return db.folderDao().getChildFolders(folderId);
+    }
 
+    public List<PdfEntity> getChildPdfsFromDb(int folderId) {
+        return db.pdfDao().getChildPdfs(folderId);
+    }
 
     private void showTaskGenerationDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.generate_task_dialog, null);
-        ExpandableListView expandableListView = dialogView.findViewById(R.id.expandableListView);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewTask); // Your new recyclerView in dialog
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<FolderEntity> folders = db.folderDao().getRootFolders();
-        Map<String, List<PdfEntity>> folderMap = new HashMap<>();
-        Map<String, List<Boolean>> selectionMap = new HashMap<>();
+        List<Object> currentItems = new ArrayList<>();
+        Set<PdfEntity> selectedPdfs = new HashSet<>();
 
-        for (FolderEntity folder : folders) {
-            List<PdfEntity> pdfs = db.pdfDao().getChildPdfs(folder.id);
-            folderMap.put(folder.folderName, pdfs);
-            List<Boolean> selected = new ArrayList<>();
-            for (int i = 0; i < pdfs.size(); i++) selected.add(false);
-            selectionMap.put(folder.folderName, selected);
+        // Initially load root folders and PDFs
+        if (currentFolderId == null) {
+            currentItems.addAll(db.folderDao().getRootFolders());
+            currentItems.addAll(db.pdfDao().getRootPdfs());
+        } else {
+            currentItems.addAll(db.folderDao().getChildFolders(currentFolderId));
+            currentItems.addAll(db.pdfDao().getChildPdfs(currentFolderId));
         }
 
-        List<String> folderNames = new ArrayList<>(folderMap.keySet());
-
-        ExpandableListAdapter adapter = new BaseExpandableListAdapter() {
-            @Override public int getGroupCount() { return folderNames.size(); }
-            @Override public int getChildrenCount(int group) { return folderMap.get(folderNames.get(group)).size(); }
-            @Override public Object getGroup(int group) { return folderNames.get(group); }
-            @Override public Object getChild(int group, int child) { return folderMap.get(folderNames.get(group)).get(child); }
-            @Override public long getGroupId(int group) { return group; }
-            @Override public long getChildId(int group, int child) { return child; }
-            @Override public boolean hasStableIds() { return false; }
-
-            @Override
-            public View getGroupView(int group, boolean isExpanded, View convertView, ViewGroup parent) {
-                TextView tv = new TextView(ShelfActivity.this);
-                tv.setPadding(80, 16, 16, 16);
-                tv.setTextSize(17f);
-                tv.setText(folderNames.get(group));
-                return tv;
-            }
-
-            @Override
-            public View getChildView(int group, int child, boolean isLast, View convertView, ViewGroup parent) {
-                CheckBox cb = new CheckBox(ShelfActivity.this);
-                String folder = folderNames.get(group);
-                PdfEntity pdf = folderMap.get(folder).get(child);
-                cb.setText(pdf.getName());
-                cb.setChecked(selectionMap.get(folder).get(child));
-                cb.setOnCheckedChangeListener((buttonView, isChecked) ->
-                        selectionMap.get(folder).set(child, isChecked));
-                return cb;
-            }
-
-            @Override
-            public boolean isChildSelectable(int group, int child) { return true; }
-        };
-
-        expandableListView.setAdapter(adapter);
+        TaskGenerationAdapter adapter = new TaskGenerationAdapter(this, currentItems, selectedPdfs);
+        recyclerView.setAdapter(adapter);
 
         new AlertDialog.Builder(this)
                 .setTitle("Select PDFs to generate tasks")
                 .setView(dialogView)
                 .setPositiveButton("Next", (dialog, which) -> {
-                    List<PdfEntity> selectedPdfs = new ArrayList<>();
-                    for (String folder : folderMap.keySet()) {
-                        List<PdfEntity> pdfs = folderMap.get(folder);
-                        List<Boolean> flags = selectionMap.get(folder);
-                        for (int i = 0; i < pdfs.size(); i++) {
-                            if (flags.get(i)) selectedPdfs.add(pdfs.get(i));
-                        }
-                    }
                     if (selectedPdfs.isEmpty()) {
                         Toast.makeText(this, "Please select at least one PDF", Toast.LENGTH_SHORT).show();
                     } else {
-                        showDurationDialog(selectedPdfs);
+                        showDurationDialog(new ArrayList<>(selectedPdfs));
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -539,9 +500,10 @@ public class ShelfActivity extends AppCompatActivity {
 
         int pdfIndex = 0;
 
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("d MMMM yyyy"); // 🔥 Change format here (e.g., 28 April 2025)
+
         for (int day = 0; day < days; day++) {
-            String dueDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
-                    .format(new java.util.Date(currentTime + (day * oneDayMillis)));
+            String dueDate = dateFormat.format(new java.util.Date(currentTime + (day * oneDayMillis))); // 🔥 Format to "28 April 2025"
 
             for (int j = 0; j < perDay && pdfIndex < totalPdfs; j++, pdfIndex++) {
                 PdfEntity pdf = selectedPdfs.get(pdfIndex);

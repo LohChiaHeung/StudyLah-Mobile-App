@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent3);
         });
 
+        Button btnViewTasks = findViewById(R.id.btnViewTasks);
+        btnViewTasks.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TaskListActivity.class);
+            startActivity(intent);
+        });
     }
 
 }
