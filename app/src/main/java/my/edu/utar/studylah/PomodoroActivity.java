@@ -84,6 +84,13 @@ public class PomodoroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pomodoro);
 
         showAddTasksDialog(); //Prompt user to input the number of tasks first
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(PomodoroActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish(); //
+        });
 
         timerText = findViewById(R.id.timerText);
         titleText = findViewById(R.id.titleText);
