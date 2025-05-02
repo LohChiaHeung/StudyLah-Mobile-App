@@ -10,6 +10,7 @@
         android:id="@+id/editTaskName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/lexend_regular"
         android:hint="Task Name" />
 
     <TextView
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Due Date"
+        android:fontFamily="@font/lexend_regular"
         android:layout_marginTop="16dp"
         android:textSize="16sp"
         android:textColor="@android:color/black"/>
@@ -26,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pick Date"
+        android:fontFamily="@font/lexend_regular"
         android:layout_marginTop="8dp" />
 
     <Button
@@ -33,5 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
+        android:fontFamily="@font/lexend_regular"
         android:layout_marginTop="24dp"/>
 </LinearLayout>

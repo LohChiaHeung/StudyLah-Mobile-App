@@ -3,107 +3,162 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <!-- Back Button -->
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+    <!-- App bar with elevation -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAppBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="← Back"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="8dp" />
+        app:cardElevation="4dp"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Search View -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:scaleType="fitCenter"
+                android:src="@drawable/homebutton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/lexend_regular"
+                android:text="My Shelf"
+                android:textColor="@color/design_default_color_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Search View with card elevation -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSearch"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Find your notes"
-        android:iconifiedByDefault="false"
-        android:background="@android:drawable/editbox_background"
-        app:layout_constraintTop_toBottomOf="@+id/btnBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="12dp" />
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardAppBar">
 
-    <!-- Path Display -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:iconifiedByDefault="false"
+            android:queryHint="Find your notes" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Path Display with better styling -->
     <TextView
         android:id="@+id/textPath"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/lexend_regular"
         android:text="Shelf"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cardSearch" />
 
     <!-- Search Result List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchResultRecyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textPath"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Folder & PDF Grid List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textPath"
-        app:layout_constraintBottom_toTopOf="@+id/btnGenerateTasks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Container to align the two buttons horizontally -->
-    <LinearLayout
-        android:id="@+id/taskButtonContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnImportPdf"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Generate Task Button -->
-
-        <!-- View Task Button -->
-    </LinearLayout>
-
-    <!-- Floating Add Button (PDF Import) -->
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnImportPdf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Upload Pdf"
-        android:src="@android:drawable/ic_menu_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPath" />
 
-    <Button
-        android:id="@+id/btnGenerateTasks"
-        android:layout_width="0dp"
+    <!-- Folder & PDF Grid List with card background -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#E3F2FD"
+        app:layout_constraintBottom_toTopOf="@+id/bottomButtonLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textPath">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fontFamily="@font/lexend_regular"
+            android:padding="8dp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Container for buttons at bottom with better alignment -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomButtonLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:text="Add New Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnImportPdf" />
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Add New Task Button with modern styling -->
+        <!-- Add New Task Button with modern styling -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGenerateTasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/lexend_regular"
+            android:paddingVertical="12dp"
+            android:text="Add New Task"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnImportPdf"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="16dp"
+            app:backgroundTint="#E3F2FD" /> <!-- Set background color to #E3F2FD -->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnImportPdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:contentDescription="AI Chatbot"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:backgroundTint="#E3F2FD" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

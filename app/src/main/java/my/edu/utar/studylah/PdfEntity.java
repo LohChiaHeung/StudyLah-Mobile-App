@@ -24,7 +24,9 @@ public class PdfEntity {
         this.parentFolderId = parentFolderId;
     }
 
-
+    public void setName(String pdf_name) {
+        this.pdf_name = pdf_name;
+    }
     public String getName() {
         return pdf_name;
     }

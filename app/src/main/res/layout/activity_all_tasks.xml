@@ -24,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="To-do List"
+        android:fontFamily="@font/lexend_regular"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -55,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Upcoming Tasks"
+                android:fontFamily="@font/lexend_regular"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
@@ -62,6 +64,7 @@
                 android:id="@+id/recyclerUpcoming"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend_regular"
                 android:layout_marginTop="8dp"/>
 
         </LinearLayout>
@@ -91,11 +94,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Completed Tasks"
+                android:fontFamily="@font/lexend_regular"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerCompleted"
+                android:fontFamily="@font/lexend_regular"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Task Name"
+            android:fontFamily="@font/lexend_regular"
             android:textStyle="bold"
             android:textSize="16sp"/>
 
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Completed Date"
+            android:fontFamily="@font/lexend_regular"
             android:textSize="14sp"/>
     </LinearLayout>
 

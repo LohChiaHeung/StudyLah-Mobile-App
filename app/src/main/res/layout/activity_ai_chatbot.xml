@@ -66,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Albert Einstein"
+                android:fontFamily="@font/lexend_regular"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="16sp" />
@@ -75,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Online"
+                android:fontFamily="@font/lexend_regular"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -153,6 +155,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/lexend_regular"
                 android:hint="Ask your question..."
                 android:background="@android:drawable/editbox_background"
                 android:textColor="@android:color/black"
@@ -173,6 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Send"
+                android:fontFamily="@font/lexend_regular"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
     </LinearLayout>

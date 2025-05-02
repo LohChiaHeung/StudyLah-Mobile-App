@@ -72,7 +72,7 @@ public class ShelfActivity extends AppCompatActivity {
             }
         });
 
-        Button btnBack = findViewById(R.id.btnBack);
+        ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         db = Room.databaseBuilder(getApplicationContext(),
@@ -292,6 +292,19 @@ public class ShelfActivity extends AppCompatActivity {
         db.pdfDao().deletePdfById(pdf.pdf_id);
         loadContents();
     }
+
+    public void updateFolderName(FolderEntity folder) {
+        // Update folder name in the database
+        db.folderDao().updateFolder(folder);
+        loadContents(); // Reload the contents to reflect changes
+    }
+
+    public void updatePdfName(PdfEntity pdf) {
+        // Update PDF name in the database
+        db.pdfDao().updatePdf(pdf);
+        loadContents(); // Reload the contents to reflect changes
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

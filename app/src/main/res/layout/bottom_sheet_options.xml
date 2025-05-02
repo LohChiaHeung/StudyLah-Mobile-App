@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="📁 Create Folder"
+        android:fontFamily="@font/lexend_regular"
         android:textSize="18sp"
         android:padding="12dp" />
 
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="📄 Import PDF"
+        android:fontFamily="@font/lexend_regular"
         android:textSize="18sp"
         android:padding="12dp" />
 

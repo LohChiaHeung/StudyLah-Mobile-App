@@ -5,81 +5,310 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
+    <!-- App bar with shadow -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAppBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="StudyLah Menu"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:cardElevation="4dp"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnOpenShelf"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Open Shelf"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
-    <Button
-        android:id="@+id/btnPomodoro"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Pomodoro Timer"
-        app:layout_constraintTop_toBottomOf="@+id/btnOpenShelf"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="StudyLah"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/design_default_color_primary"
+                android:fontFamily="@font/lexend_regular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
-        android:id="@+id/btnChatbot"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="AI Chatbot"
-        app:layout_constraintTop_toBottomOf="@+id/btnPomodoro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+            <TextView
+                android:id="@+id/textSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your study companion"
+                android:textSize="14sp"
+                android:textColor="@color/design_default_color_secondary"
+                android:fontFamily="@font/lexend_regular"
+                app:layout_constraintTop_toBottomOf="@id/textTitle"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
-        android:id="@+id/btnViewTasks"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="View Tasks"
-        app:layout_constraintTop_toBottomOf="@+id/btnChatbot"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnGenerateQuiz"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="AI-Generated Quiz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewTasks" />
+    <!-- Card for button container -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/cardAppBar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/btnQuizHistory"
-        android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Open Shelf Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardOpenShelf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/design_default_color_primary_dark"
+                app:cardBackgroundColor="#E3F2FD">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iconOpenShelf"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_book"
+                        app:tint="@color/design_default_color_primary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Open Shelf"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:fontFamily="@font/lexend_regular"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/iconOpenShelf"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Pomodoro Timer Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPomodoro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/design_default_color_primary_dark"
+                app:cardBackgroundColor="#E3F2FD">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iconPomodoro"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_timer"
+                        app:tint="@color/design_default_color_primary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Pomodoro Timer"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:fontFamily="@font/lexend_regular"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/iconPomodoro"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- View Tasks Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewTasks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/design_default_color_primary_dark"
+                app:cardBackgroundColor="#E3F2FD">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iconViewTasks"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_task"
+                        app:tint="@color/design_default_color_primary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="View Tasks"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:fontFamily="@font/lexend_regular"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/iconViewTasks"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- AI-Generated Quiz Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardGenerateQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/design_default_color_primary_dark"
+                app:cardBackgroundColor="#E3F2FD">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iconGenerateQuiz"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_quiz"
+                        app:tint="@color/design_default_color_primary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="AI-Generated Quiz"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:fontFamily="@font/lexend_regular"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/iconGenerateQuiz"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- View Quiz History Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQuizHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="@color/design_default_color_primary_dark"
+                app:cardBackgroundColor="#E3F2FD">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iconQuizHistory"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_history"
+                        app:tint="@color/design_default_color_primary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="View Quiz History"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:fontFamily="@font/lexend_regular"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintStart_toEndOf="@id/iconQuizHistory"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Container for buttons at bottom with better alignment -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomButtonLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="View Quiz History"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGenerateQuiz" />
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- AI Chatbot FAB with consistent styling -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnChatbot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_chat"
+            android:contentDescription="AI Chatbot"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:backgroundTint="#E3F2FD" /> <!-- Set background color here -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

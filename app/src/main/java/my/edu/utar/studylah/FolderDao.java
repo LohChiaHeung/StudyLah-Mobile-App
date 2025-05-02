@@ -3,6 +3,8 @@ package my.edu.utar.studylah;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
+
 import java.util.List;
 
 @Dao
@@ -27,6 +29,9 @@ public interface FolderDao {
 
     @Query("DELETE FROM folders WHERE id = :folderId")
     void deleteFolderById(int folderId);
+
+    @Update
+    void updateFolder(FolderEntity folder);
 
 
 

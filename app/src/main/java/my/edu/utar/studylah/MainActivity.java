@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -15,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-//Testing
 public class MainActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<Intent> pdfLauncher = registerForActivityResult(
@@ -33,46 +34,51 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnShelf = findViewById(R.id.btnOpenShelf);
-        btnShelf.setOnClickListener(v -> {
+        // Open Shelf Card
+        MaterialCardView cardShelf = findViewById(R.id.cardOpenShelf);
+        cardShelf.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ShelfActivity.class);
             startActivity(intent);
         });
 
-        Button btnPomodoro = findViewById(R.id.btnPomodoro);
-        btnPomodoro.setOnClickListener(v -> {
+        // Pomodoro Timer Card
+        MaterialCardView cardPomodoro = findViewById(R.id.cardPomodoro);
+        cardPomodoro.setOnClickListener(v -> {
             Intent intent2 = new Intent(MainActivity.this, PomodoroActivity.class);
             startActivity(intent2);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_color));
         });
 
-        Button btnchatbot = findViewById(R.id.btnChatbot);
-        btnchatbot.setOnClickListener(v -> {
-            Intent intent3 = new Intent(MainActivity.this, AiChatbotPage.class);
-            startActivity(intent3);
-        });
-
-        Button btnViewTasks = findViewById(R.id.btnViewTasks);
-        btnViewTasks.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TaskListActivity.class);
+        // AI Chatbot Button click listener
+        FloatingActionButton btnChatbot = findViewById(R.id.btnChatbot);
+        btnChatbot.setOnClickListener(v -> {
+            // Navigate to AiChatbotPage
+            Intent intent = new Intent(MainActivity.this, AiChatbotPage.class);
             startActivity(intent);
         });
 
 
-        Button btnGenerateQuiz = findViewById(R.id.btnGenerateQuiz);
-        btnGenerateQuiz.setOnClickListener(v -> {
+        // View Tasks Card
+        MaterialCardView cardViewTasks = findViewById(R.id.cardViewTasks);
+        cardViewTasks.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TaskListActivity.class);
+            startActivity(intent);
+        });
+
+        // Generate Quiz Card
+        MaterialCardView cardGenerateQuiz = findViewById(R.id.cardGenerateQuiz);
+        cardGenerateQuiz.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("application/pdf");
             pdfLauncher.launch(Intent.createChooser(intent, "Select PDF"));
         });
 
-
-        Button btnQuizHistory = findViewById(R.id.btnQuizHistory);
-        btnQuizHistory.setOnClickListener(v -> {
+        // Quiz History Card
+        MaterialCardView cardQuizHistory = findViewById(R.id.cardQuizHistory);
+        cardQuizHistory.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, QuizHistoryActivity.class);
             startActivity(intent);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.statusbar_color));
-
         });
     }
 
@@ -115,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
         // Style the dialog buttons
-        Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        Button negative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        android.widget.Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        android.widget.Button negative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         Typeface lexend = ResourcesCompat.getFont(this, R.font.lexend_regular);
         if (positive != null) {
             positive.setTypeface(lexend);
@@ -127,8 +133,4 @@ public class MainActivity extends AppCompatActivity {
             negative.setTextColor(Color.DKGRAY);
         }
     }
-
-
-
-
 }

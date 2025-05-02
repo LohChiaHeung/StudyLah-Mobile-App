@@ -3,6 +3,8 @@ package my.edu.utar.studylah;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
+
 import java.util.List;
 
 @Dao
@@ -22,6 +24,9 @@ public interface PdfDao {
 
     @Query("SELECT * FROM pdfs WHERE parent_folder_id IS NULL")
     List<PdfEntity> getRootPdfs();
+
+    @Update
+    void updatePdf(PdfEntity pdf);
 }
 
 

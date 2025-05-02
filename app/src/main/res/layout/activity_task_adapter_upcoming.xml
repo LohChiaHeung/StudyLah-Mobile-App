@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Task Name"
+            android:fontFamily="@font/lexend_regular"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
@@ -28,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Due Date"
+            android:fontFamily="@font/lexend_regular"
             android:textSize="14sp"
             android:layout_marginTop="4dp"/>
 

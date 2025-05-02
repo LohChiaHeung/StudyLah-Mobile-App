@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fontFamily="@font/lexend_regular"
     android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTask"
+        android:fontFamily="@font/lexend_regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

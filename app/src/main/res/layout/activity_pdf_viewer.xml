@@ -32,6 +32,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center"
+            android:fontFamily="@font/lexend_regular"
             android:ellipsize="middle"
             android:singleLine="true"
             android:textColor="@android:color/white"
@@ -70,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:fontFamily="@font/lexend_regular"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             tools:text="Page 1 of 10" />

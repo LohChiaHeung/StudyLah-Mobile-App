@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="To-do List"
+        android:fontFamily="@font/lexend_regular"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Task"
+        android:fontFamily="@font/lexend_regular"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
@@ -73,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="25"
+                    android:fontFamily="@font/lexend_regular"
                     android:textSize="24sp"
                     android:textStyle="bold"/>
 
@@ -80,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Tasks"
+                    android:fontFamily="@font/lexend_regular"
                     android:textSize="14sp"/>
             </LinearLayout>
 
@@ -95,6 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15"
+                    android:fontFamily="@font/lexend_regular"
                     android:textSize="24sp"
                     android:textStyle="bold"/>
 
@@ -102,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Completed Tasks"
+                    android:fontFamily="@font/lexend_regular"
                     android:textSize="14sp"/>
             </LinearLayout>
 
@@ -114,6 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Today's Tasks - 8 March 2025"
+        android:fontFamily="@font/lexend_regular"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="24dp"
