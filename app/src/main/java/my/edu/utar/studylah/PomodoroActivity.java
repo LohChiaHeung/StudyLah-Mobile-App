@@ -44,12 +44,12 @@ public class PomodoroActivity extends AppCompatActivity {
     private boolean isStudy = true;
     private boolean isTimerRunning = false;
     //10 sec for demo
-    private long studyTimeInMillis = 10 * 1000;
-    private long breakTimeInMillis = 10 * 1000;
+//    private long studyTimeInMillis = 10 * 1000;
+//    private long breakTimeInMillis = 10 * 1000;
 
     //25 minutes for working session, 5 minutes for break session
-//    private long studyTimeInMillis = 25 * 60 * 1000;
-//    private long breakTimeInMillis = 5 * 60 * 1000;
+    private long studyTimeInMillis = 25 * 60 * 1000;
+    private long breakTimeInMillis = 5 * 60 * 1000;
     private long timeLeftInMillis = studyTimeInMillis;
     private int completedTasks = 0, totalTasks = 10; // Task Tracking
     private int musicResumePosition = 0;
