@@ -22,25 +22,39 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+            <ImageView
+                android:id="@+id/themeImage"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/studylah_icon"
+                android:scaleType="fitCenter"
+                android:contentDescription="Theme Icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="ContentDescription" />
+
             <TextView
+                android:paddingLeft="5dp"
                 android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="StudyLah"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:textColor="@color/design_default_color_primary"
+                android:textColor="#7DA0FF"
                 android:fontFamily="@font/lexend_regular"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
+                android:paddingLeft="5dp"
                 android:id="@+id/textSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your study companion"
                 android:textSize="14sp"
-                android:textColor="@color/design_default_color_secondary"
+                android:textColor="#666666"
                 android:fontFamily="@font/lexend_regular"
                 app:layout_constraintTop_toBottomOf="@id/textTitle"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -60,6 +74,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical">
 
             <!-- Open Shelf Button -->
@@ -67,17 +82,19 @@
                 android:id="@+id/cardOpenShelf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="3dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                app:rippleColor="@color/design_default_color_primary_dark"
+
                 app:cardBackgroundColor="#E3F2FD">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:padding="16dp">
 
                     <ImageView
@@ -109,20 +126,22 @@
 
             <!-- Pomodoro Timer Button -->
             <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="12dp"
                 android:id="@+id/cardPomodoro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="3dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
                 android:clickable="true"
                 android:focusable="true"
-                app:rippleColor="@color/design_default_color_primary_dark"
                 app:cardBackgroundColor="#E3F2FD">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:padding="16dp">
 
                     <ImageView
@@ -155,19 +174,21 @@
             <!-- View Tasks Button -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewTasks"
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="3dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
                 android:clickable="true"
                 android:focusable="true"
-                app:rippleColor="@color/design_default_color_primary_dark"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:cardBackgroundColor="#E3F2FD">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:padding="16dp">
 
                     <ImageView
@@ -199,20 +220,22 @@
 
             <!-- AI-Generated Quiz Button -->
             <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="12dp"
                 android:id="@+id/cardGenerateQuiz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="3dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
                 android:clickable="true"
                 android:focusable="true"
-                app:rippleColor="@color/design_default_color_primary_dark"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:cardBackgroundColor="#E3F2FD">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:padding="16dp">
 
                     <ImageView
@@ -245,19 +268,21 @@
             <!-- View Quiz History Button -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardQuizHistory"
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="3dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
                 android:clickable="true"
                 android:focusable="true"
-                app:rippleColor="@color/design_default_color_primary_dark"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:cardBackgroundColor="#E3F2FD">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:padding="16dp">
 
                     <ImageView
