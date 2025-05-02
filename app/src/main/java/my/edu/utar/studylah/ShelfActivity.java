@@ -248,6 +248,12 @@ public class ShelfActivity extends AppCompatActivity {
         searchResultAdapter.updateResults(filtered);
         searchResultRecyclerView.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE); // ✅ hide main folders/pdfs
+        Log.d("ShelfActivity", "Search query: " + query);
+        Log.d("ShelfActivity", "Total PDFs to search: " + allPdfs.size());
+        for (PdfEntity pdf : allPdfs) {
+            Log.d("ShelfActivity", "Checking PDF: " + pdf.getName());
+        }
+
     }
 
 

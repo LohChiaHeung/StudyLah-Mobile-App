@@ -37,9 +37,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PdfEntity pdf = searchResults.get(position);
-        ((TextView) holder.itemView).setText("📄 " + pdf.getName());
+        String name = (pdf.getName() != null && !pdf.getName().trim().isEmpty()) ? pdf.getName() : "Unnamed PDF";
+        ((TextView) holder.itemView).setText("📄 " + name);
         holder.itemView.setOnClickListener(v -> clickListener.onPdfClick(pdf));
     }
+
 
     @Override
     public int getItemCount() {
