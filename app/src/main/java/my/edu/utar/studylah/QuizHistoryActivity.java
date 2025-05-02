@@ -37,19 +37,17 @@ public class QuizHistoryActivity extends AppCompatActivity {
         layoutDetails = findViewById(R.id.layoutDetails);
         layoutDetailsScroll = findViewById(R.id.layoutDetailsScroll);
 
-
         ImageButton btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(QuizHistoryActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
-            finish(); // Optional: close current activity
+            finish();
         });
 
 
         loadQuizTitles();
     }
-
     private void loadQuizTitles() {
         new Thread(() -> {
             my.edu.utar.studylah.room.AppDatabase db = my.edu.utar.studylah.room.AppDatabase.getInstance(getApplicationContext());
@@ -72,7 +70,7 @@ public class QuizHistoryActivity extends AppCompatActivity {
                     tvTitle.setText(displayTitle);
 
 
-                    // 🕒 Fetch and show recent date
+                    // Fetch and show recent date
                     new Thread(() -> {
                         String latestDate = db.quizDao().getMostRecentDateForTitle(rawTitle);
                         runOnUiThread(() -> {
@@ -118,9 +116,7 @@ public class QuizHistoryActivity extends AppCompatActivity {
                 }
             });
         }).start();
-
     }
-
 
     private void showSessionsForTitle(String title) {
         layoutDetails.removeAllViews();
@@ -128,9 +124,9 @@ public class QuizHistoryActivity extends AppCompatActivity {
         Button backButton = new Button(this);
         backButton.setText("BACK TO QUIZ LISTS");
         backButton.setTextColor(Color.WHITE);
-        backButton.setBackgroundColor(Color.parseColor("#94b1ff")); // your app's primary blue
+        backButton.setBackgroundColor(Color.parseColor("#94b1ff"));
         backButton.setTextSize(16f);
-        backButton.setTypeface(ResourcesCompat.getFont(this, R.font.lexend_regular)); // make sure font is imported
+        backButton.setTypeface(ResourcesCompat.getFont(this, R.font.lexend_regular));
         backButton.setPadding(30, 20, 30, 20);
 
         backButton.setOnClickListener(v -> {
@@ -157,14 +153,13 @@ public class QuizHistoryActivity extends AppCompatActivity {
                     sessionDate.setText("🕒 " + record.session.date +
                             " | Score: " + record.session.score + "/" + record.session.totalQuestions);
                     sessionDate.setPadding(0, 20, 0, 15);
-                    sessionDate.setTextSize(14); // 🔸 Increase text size (in sp)
+                    sessionDate.setTextSize(14); // Increase text size (in sp)
 
                     // Apply custom font
                     Typeface lexend = ResourcesCompat.getFont(this, R.font.lexend_regular);
                     sessionDate.setTypeface(lexend);
 
                     layoutDetails.addView(sessionDate);
-
 
                     for (int i = 0; i < record.questions.size(); i++) {
                         QuestionEntity q = record.questions.get(i);
@@ -185,11 +180,8 @@ public class QuizHistoryActivity extends AppCompatActivity {
                         } else {
                             tvSelectedAnswer.setTextColor(Color.parseColor("#FF4444")); // red for incorrect
                         }
-
                         layoutDetails.addView(qCard);
                     }
-
-
                 }
             });
         }).start();

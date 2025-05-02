@@ -187,8 +187,6 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-
-
     private List<QuestionModel> loadQuestions() {
         String json = getIntent().getStringExtra("generated_questions");
         if (json != null) {
@@ -229,7 +227,6 @@ public class QuizActivity extends AppCompatActivity {
                 qe.selectedAnswer = q.getSelectedAnswer();
                 entityList.add(qe);
             }
-
             dao.insertQuestions(entityList);
         }).start();
     }

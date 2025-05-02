@@ -4,7 +4,7 @@ public class QuestionModel {
     private String question;
     private String[] options;
     private String correctAnswer;
-    private String selectedAnswer; // Optional
+    private String selectedAnswer;
 
     public QuestionModel(String question, String[] options, String correctAnswer) {
         this.question = question;

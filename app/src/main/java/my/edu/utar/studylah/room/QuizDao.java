@@ -19,11 +19,9 @@ public interface QuizDao {
     @Query("SELECT * FROM quiz_sessions ORDER BY date DESC")
     List<QuizSessionWithQuestions> getAllSessionsWithQuestions();
 
-
     @Transaction
     @Query("SELECT * FROM quiz_sessions WHERE COALESCE(title, 'Untitled Quiz') = :title")
     List<QuizSessionWithQuestions> getSessionsByTitle(String title);
-
 
     @Query("SELECT DISTINCT IFNULL(title, 'Untitled Quiz') FROM quiz_sessions ORDER BY date DESC")
     List<String> getAllTitles();

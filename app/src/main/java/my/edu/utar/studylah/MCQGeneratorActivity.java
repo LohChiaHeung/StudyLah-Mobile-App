@@ -57,7 +57,7 @@ public class MCQGeneratorActivity extends AppCompatActivity {
 
         txtMcqOutput = findViewById(R.id.txtMcqOutput);
 
-        // ✅ Get data passed from MainActivity
+        // Get data passed from MainActivity
         Intent intent = getIntent();
         if (intent != null) {
             String uriStr = intent.getStringExtra("pdf_uri");
@@ -78,44 +78,11 @@ public class MCQGeneratorActivity extends AppCompatActivity {
         }
     }
 
-
     private void openPdfPicker() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("application/pdf");
         startActivityForResult(Intent.createChooser(intent, "Select PDF"), PICK_PDF_CODE);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == PICK_PDF_CODE && resultCode == RESULT_OK && data != null) {
-//            Uri pdfUri = data.getData();
-//            if (pdfUri != null) {
-//                try {
-//                    File file = FileUtil.from(this, pdfUri);
-//                    String extractedText = extractTextFromPdf(file);
-//                    List<String> chunks = splitTextIntoChunks(extractedText, 1000);
-//
-//                    EditText input = new EditText(this);
-//                    new AlertDialog.Builder(this)
-//                            .setTitle("Enter Quiz Title")
-//                            .setView(input)
-//                            .setPositiveButton("Start", (dialog, which) -> {
-//                                String title = input.getText().toString().trim();
-//                                if (title.isEmpty()) title = "Untitled Quiz";
-//                                summarizeChunks(chunks, title);
-//                            })
-//                            .show();
-//
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(this, "Error reading PDF", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
 
     private void summarizeChunks(List<String> chunks, String title) {
         allSummaries.clear();
@@ -171,21 +138,6 @@ public class MCQGeneratorActivity extends AppCompatActivity {
         }
     }
 
-//    private void launchQuizWithHardcodedQuestions(String title) {
-//        List<QuestionModel> questionList = new ArrayList<>();
-//
-//        questionList.add(new QuestionModel("What is Java?", new String[]{"A fruit", "A car", "A programming language", "A drink"}, "C"));
-//        questionList.add(new QuestionModel("Which company developed Android?", new String[]{"Apple", "Microsoft", "Google", "Samsung"}, "C"));
-//        // ✅ Add 8 more hardcoded questions...
-//
-//        Intent intent = new Intent(MCQGeneratorActivity.this, QuizActivity.class);
-//        intent.putExtra("generated_questions", new Gson().toJson(questionList));
-//        intent.putExtra("pdf_title", title);
-//        startActivity(intent);
-//    }
-
-
-
     private String extractTextFromPdf(File pdfFile) {
         String parsedText = "";
         try {
@@ -207,53 +159,6 @@ public class MCQGeneratorActivity extends AppCompatActivity {
         }
         return chunks;
     }
-
-//    private void summarizeText(String chunk, int index, int totalChunks) {
-//        JSONObject json = new JSONObject();
-//        JSONArray messages = new JSONArray();
-//        JSONObject message = new JSONObject();
-//
-//        try {
-//            message.put("role", "user");
-//            message.put("content", "Summarize this text for MCQ generation:\n\n" + chunk);
-//            messages.put(message);
-//
-//            json.put("model", "gpt-3.5-turbo");
-//            json.put("messages", messages);
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        RequestBody body = RequestBody.create(json.toString(), MediaType.get("application/json"));
-//        Request request = new Request.Builder()
-//                .url("https://api.openai.com/v1/chat/completions")
-//                .addHeader("Authorization", "Bearer " + OPENAI_API_KEY)
-//                .post(body)
-//                .build();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                runOnUiThread(() -> txtMcqOutput.append("\nAPI failed\n"));
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String result = parseOpenAiResponse(response);
-//
-//                // 🧠 You need to implement this to extract question list
-//                List<QuestionModel> questionList = parseMcqResult(result);
-//
-//                // 🚀 Move to QuizActivity with questions + optional title
-//                Intent intent = new Intent(MCQGeneratorActivity.this, QuizActivity.class);
-//                intent.putExtra("generated_questions", new Gson().toJson(questionList));
-//                intent.putExtra("pdf_title", "Chapter 1 - Java Basics"); // or extract from actual filename
-//                startActivity(intent);
-//            }
-//
-//        });
-//    }
 
     private void generateMcqsFromSummary(String summary, String title) {
         // Show progress dialog
@@ -321,10 +226,6 @@ public class MCQGeneratorActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
     private List<QuestionModel> parseMcqResult(String gptOutput) {
         List<QuestionModel> questions = new ArrayList<>();
 
@@ -364,12 +265,8 @@ public class MCQGeneratorActivity extends AppCompatActivity {
         if (questionText != null && optionIndex == 4 && correctAnswer != null) {
             questions.add(new QuestionModel(questionText, options, correctAnswer));
         }
-
         return questions;
     }
-
-
-
 
     private String parseOpenAiResponse(Response response) throws IOException {
         String body = response.body().string();
