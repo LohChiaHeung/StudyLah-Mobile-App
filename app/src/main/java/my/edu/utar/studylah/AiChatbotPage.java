@@ -55,7 +55,7 @@ public class AiChatbotPage extends AppCompatActivity {
     private Bitmap selectedBitmap;
     private static final int IMAGE_PICK_CODE = 1001;
     private static final int CAMERA_CODE = 1002;
-    private static final String apiKey = "Bearer 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";
+    private static final String apiKey = "Bearer sk-proj-"; //need to change to own API Keys
     private static final String apiUrl = "https://api.openai.com/v1/chat/completions";
 
 
