@@ -313,7 +313,7 @@ public class AiChatbotPage extends AppCompatActivity {
 
 
     private void translateText(String originalText, String targetLanguage, LinearLayout container) {
-        String apiKey = "Bearer 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";
+        String apiKey = "Bearer sk-proj-"; //need to change to own API Keys
         String apiUrl = "https://api.openai.com/v1/chat/completions";
 
         loadingIndicator.setVisibility(View.VISIBLE);
