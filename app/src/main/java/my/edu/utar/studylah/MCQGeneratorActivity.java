@@ -41,7 +41,7 @@ public class MCQGeneratorActivity extends AppCompatActivity {
     private AlertDialog progressDialog;
 
 
-    private final String OPENAI_API_KEY = "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";
+    private final String OPENAI_API_KEY = "sk-proj-"; //need to change to own API Keys
 
     Uri pdfUri = null;
     String quizTitle = "Untitled Quiz";
